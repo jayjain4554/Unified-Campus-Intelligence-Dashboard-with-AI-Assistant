@@ -20,12 +20,17 @@ import {
   ChevronRight, 
   Sparkles,
   Bot,
-  BarChart2
+  BarChart2,
+  Minus,
+  X,
+  MessageSquare
 } from "lucide-react";
 import { ChatMessage, AssistantResponse } from "@campus-intelligence/types";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<"overview" | "library" | "cafeteria" | "academics" | "events" | "analytics">("overview");
+  const [isOpen, setIsOpen] = useState(true);
+  const [isMinimized, setIsMinimized] = useState(false);
   
   // Metrics state
   const [metricsData, setMetricsData] = useState<any>(null);
@@ -1036,115 +1041,153 @@ export default function Home() {
         </div>
 
         {/* EMBEDDED CHAT ASSISTANT PANEL */}
-        <section className="absolute bottom-6 right-6 w-96 max-h-[500px] h-[500px] border border-[#1e293b] bg-[#0b0f19]/95 backdrop-blur-md rounded-2xl flex flex-col justify-between shadow-2xl shadow-black/80 z-20 overflow-hidden">
-          {/* Assistant Header */}
-          <div className="p-4 border-b border-[#1e293b] flex items-center justify-between bg-gradient-to-r from-blue-900/30 to-indigo-900/30">
-            <div className="flex items-center space-x-2.5">
-              <div className="h-7 w-7 rounded-lg bg-blue-600 flex items-center justify-center">
-                <Sparkles className="h-4 w-4 text-white animate-pulse" />
+        {isOpen && (
+          <section className={`absolute bottom-6 right-6 w-96 border border-[#1e293b] bg-[#0b0f19]/95 backdrop-blur-md rounded-2xl flex flex-col justify-between shadow-2xl shadow-black/80 z-20 overflow-hidden transition-all duration-200 ${isMinimized ? 'h-[58px]' : 'max-h-[500px] h-[500px]'}`}>
+            {/* Assistant Header */}
+            <div 
+              className="p-4 border-b border-[#1e293b] flex items-center justify-between bg-gradient-to-r from-blue-900/30 to-indigo-900/30 cursor-pointer select-none"
+              onClick={() => setIsMinimized(!isMinimized)}
+            >
+              <div className="flex items-center space-x-2.5">
+                <div className="h-7 w-7 rounded-lg bg-blue-600 flex items-center justify-center">
+                  <Sparkles className="h-4 w-4 text-white animate-pulse" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-white tracking-wide">Campus AI Copilot</p>
+                  {!isMinimized && <span className="text-[9px] text-slate-400 font-mono">Real-time MCP Gateway</span>}
+                </div>
               </div>
-              <div>
-                <p className="text-xs font-bold text-white tracking-wide">Campus AI Copilot</p>
-                <span className="text-[9px] text-slate-400 font-mono">Real-time MCP Gateway</span>
+              <div className="flex items-center space-x-1" onClick={(e) => e.stopPropagation()}>
+                <button 
+                  onClick={() => setIsMinimized(!isMinimized)}
+                  className="p-1 hover:bg-slate-800/60 rounded text-slate-400 hover:text-slate-100 transition-colors"
+                  title={isMinimized ? "Expand" : "Minimize"}
+                >
+                  <Minus className="h-3.5 w-3.5" />
+                </button>
+                <button 
+                  onClick={() => setIsOpen(false)}
+                  className="p-1 hover:bg-rose-950/40 rounded text-slate-400 hover:text-rose-400 transition-colors"
+                  title="Close"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
               </div>
             </div>
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-          </div>
 
-          {/* Chat message viewport */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin">
-            {messages.map((msg) => (
-              <div 
-                key={msg.id} 
-                className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
-              >
-                <div 
-                  className={`max-w-[85%] rounded-2xl px-4 py-3 text-xs leading-relaxed ${
-                    msg.sender === "user"
-                      ? "bg-blue-600 text-white rounded-br-none"
-                      : "bg-[#172033]/80 border border-[#1e293b] text-slate-200 rounded-bl-none"
-                  }`}
-                >
-                  {/* Render AI Reasoning block if traces exist */}
-                  {msg.traces && msg.traces.length > 0 && (
-                    <div className="mb-3 p-2.5 rounded-lg bg-[#0b0f19] border border-slate-700/50 text-[10px] space-y-2">
-                      <div className="font-semibold text-slate-300 flex items-center space-x-1 border-b border-slate-700/50 pb-1 mb-1.5">
-                        <Sparkles className="h-3 w-3 text-indigo-400" />
-                        <span>AI Reasoning:</span>
-                      </div>
-                      {msg.traces.map((trace, idx) => (
-                        <div key={idx} className="space-y-1">
-                          <div className="flex items-start space-x-1.5 text-emerald-400">
-                            <CheckCircle className="h-3 w-3 mt-0.5 shrink-0 text-emerald-500" />
-                            <span className="leading-tight text-slate-300">{trace.reason}</span>
+            {!isMinimized && (
+              <>
+                {/* Chat message viewport */}
+                <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin">
+                  {messages.map((msg) => (
+                    <div 
+                      key={msg.id} 
+                      className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
+                    >
+                      <div 
+                        className={`max-w-[85%] rounded-2xl px-4 py-3 text-xs leading-relaxed ${
+                          msg.sender === "user"
+                            ? "bg-blue-600 text-white rounded-br-none"
+                            : "bg-[#172033]/80 border border-[#1e293b] text-slate-200 rounded-bl-none"
+                        }`}
+                      >
+                        {/* Render AI Reasoning block if traces exist */}
+                        {msg.traces && msg.traces.length > 0 && (
+                          <div className="mb-3 p-2.5 rounded-lg bg-[#0b0f19] border border-slate-700/50 text-[10px] space-y-2">
+                            <div className="font-semibold text-slate-300 flex items-center space-x-1 border-b border-slate-700/50 pb-1 mb-1.5">
+                              <Sparkles className="h-3 w-3 text-indigo-400" />
+                              <span>AI Reasoning:</span>
+                            </div>
+                            {msg.traces.map((trace, idx) => (
+                              <div key={idx} className="space-y-1">
+                                <div className="flex items-start space-x-1.5 text-emerald-400">
+                                  <CheckCircle className="h-3 w-3 mt-0.5 shrink-0 text-emerald-500" />
+                                  <span className="leading-tight text-slate-300">{trace.reason}</span>
+                                </div>
+                                <div className="flex items-start space-x-1.5 text-slate-400">
+                                  <CheckCircle className="h-3 w-3 mt-0.5 shrink-0 text-emerald-500" />
+                                  <span className="leading-tight text-slate-400">Retrieved {trace.recordsReturned} record{trace.recordsReturned !== 1 ? 's' : ''} from {trace.serverKey}</span>
+                                </div>
+                              </div>
+                            ))}
+                            <div className="flex items-start space-x-1.5 text-slate-300 pt-1.5 mt-1.5 border-t border-slate-700/50">
+                              <CheckCircle className="h-3 w-3 mt-0.5 shrink-0 text-emerald-500" />
+                              <span>Response generated successfully</span>
+                            </div>
                           </div>
-                          <div className="flex items-start space-x-1.5 text-slate-400">
-                            <CheckCircle className="h-3 w-3 mt-0.5 shrink-0 text-emerald-500" />
-                            <span className="leading-tight text-slate-400">Retrieved {trace.recordsReturned} record{trace.recordsReturned !== 1 ? 's' : ''} from {trace.serverKey}</span>
-                          </div>
+                        )}
+
+                        {/* Handle Markdown bullet renders in answers */}
+                        <div className="whitespace-pre-line">
+                          {msg.content}
                         </div>
-                      ))}
-                      <div className="flex items-start space-x-1.5 text-slate-300 pt-1.5 mt-1.5 border-t border-slate-700/50">
-                        <CheckCircle className="h-3 w-3 mt-0.5 shrink-0 text-emerald-500" />
-                        <span>Response generated successfully</span>
+
+                        {/* Render Suggested Actions if they exist */}
+                        {msg.suggestedActions && msg.suggestedActions.length > 0 && (
+                          <div className="flex flex-wrap gap-2 mt-3 pt-2 border-t border-[#1e293b]/60">
+                            {msg.suggestedActions.map((action, actionIdx) => (
+                              <button
+                                key={actionIdx}
+                                onClick={() => handleActionClick(action)}
+                                className="flex items-center space-x-1 px-3 py-1 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30 hover:bg-blue-500/30 text-[10px] font-semibold transition-all duration-200"
+                              >
+                                <span>{action.label}</span>
+                                <ChevronRight className="h-3 w-3" />
+                              </button>
+                            ))}
+                          </div>
+                        )}
                       </div>
+                      <span className="text-[9px] text-slate-500 font-mono mt-1 px-1">
+                        {msg.timestamp}
+                      </span>
+                    </div>
+                  ))}
+
+                  {isTyping && (
+                    <div className="flex items-center space-x-2 p-1">
+                      <span className="text-[10px] text-slate-400">Copilot thinking...</span>
+                      <span className="h-1.5 w-1.5 bg-blue-500 rounded-full animate-bounce delay-100"></span>
+                      <span className="h-1.5 w-1.5 bg-blue-500 rounded-full animate-bounce delay-200"></span>
                     </div>
                   )}
-
-                  {/* Handle Markdown bullet renders in answers */}
-                  <div className="whitespace-pre-line">
-                    {msg.content}
-                  </div>
-
-                  {/* Render Suggested Actions if they exist */}
-                  {msg.suggestedActions && msg.suggestedActions.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-3 pt-2 border-t border-[#1e293b]/60">
-                      {msg.suggestedActions.map((action, actionIdx) => (
-                        <button
-                          key={actionIdx}
-                          onClick={() => handleActionClick(action)}
-                          className="flex items-center space-x-1 px-3 py-1 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30 hover:bg-blue-500/30 text-[10px] font-semibold transition-all duration-200"
-                        >
-                          <span>{action.label}</span>
-                          <ChevronRight className="h-3 w-3" />
-                        </button>
-                      ))}
-                    </div>
-                  )}
+                  <div ref={chatEndRef} />
                 </div>
-                <span className="text-[9px] text-slate-500 font-mono mt-1 px-1">
-                  {msg.timestamp}
-                </span>
-              </div>
-            ))}
 
-            {isTyping && (
-              <div className="flex items-center space-x-2 p-1">
-                <span className="text-[10px] text-slate-400">Copilot thinking...</span>
-                <span className="h-1.5 w-1.5 bg-blue-500 rounded-full animate-bounce delay-100"></span>
-                <span className="h-1.5 w-1.5 bg-blue-500 rounded-full animate-bounce delay-200"></span>
-              </div>
+                {/* Input Chat Message Form */}
+                <form onSubmit={handleSendMessage} className="p-3 border-t border-[#1e293b] bg-[#070a12] flex space-x-2">
+                  <input
+                    type="text"
+                    placeholder="Ask about GPA, schedule, menus, events..."
+                    value={inputMessage}
+                    onChange={(e) => setInputMessage(e.target.value)}
+                    className="flex-1 bg-slate-900/60 border border-[#1e293b] rounded-xl px-4 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                  />
+                  <button
+                    type="submit"
+                    className="h-9 w-9 rounded-xl bg-blue-600 hover:bg-blue-500 flex items-center justify-center text-white transition-colors"
+                  >
+                    <Send className="h-3.5 w-3.5" />
+                  </button>
+                </form>
+              </>
             )}
-            <div ref={chatEndRef} />
-          </div>
+          </section>
+        )}
 
-          {/* Input Chat Message Form */}
-          <form onSubmit={handleSendMessage} className="p-3 border-t border-[#1e293b] bg-[#070a12] flex space-x-2">
-            <input
-              type="text"
-              placeholder="Ask about GPA, schedule, menus, events..."
-              value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-              className="flex-1 bg-slate-900/60 border border-[#1e293b] rounded-xl px-4 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500"
-            />
-            <button
-              type="submit"
-              className="h-9 w-9 rounded-xl bg-blue-600 hover:bg-blue-500 flex items-center justify-center text-white transition-colors"
-            >
-              <Send className="h-3.5 w-3.5" />
-            </button>
-          </form>
-        </section>
+        {/* Floating trigger button when chat is closed */}
+        {!isOpen && (
+          <button
+            onClick={() => {
+              setIsOpen(true);
+              setIsMinimized(false);
+            }}
+            className="absolute bottom-6 right-6 h-12 w-12 rounded-full bg-blue-600 hover:bg-blue-500 flex items-center justify-center text-slate-100 shadow-xl shadow-blue-500/20 hover:scale-105 active:scale-95 transition-all duration-200 z-20 border border-blue-400/30"
+            title="Open Campus AI Copilot"
+          >
+            <MessageSquare className="h-5 w-5" />
+          </button>
+        )}
 
       </main>
     </div>
