@@ -1,4 +1,0 @@
-{
-  "buildCommand": "cd ../.. && npm install && npx turbo run build --filter=@campus-intelligence/web",
-  "outputDirectory": ".next"
-}
