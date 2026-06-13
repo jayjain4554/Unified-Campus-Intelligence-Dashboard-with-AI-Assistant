@@ -23,7 +23,9 @@ import {
   BarChart2,
   Minus,
   X,
-  MessageSquare
+  MessageSquare,
+  ChevronDown,
+  ChevronUp
 } from "lucide-react";
 import { ChatMessage, AssistantResponse } from "@campus-intelligence/types";
 
@@ -1060,10 +1062,14 @@ export default function Home() {
               <div className="flex items-center space-x-1" onClick={(e) => e.stopPropagation()}>
                 <button 
                   onClick={() => setIsMinimized(!isMinimized)}
-                  className="p-1 hover:bg-slate-800/60 rounded text-slate-400 hover:text-slate-100 transition-colors"
+                  className="p-1 hover:bg-slate-800/60 rounded text-slate-400 hover:text-slate-100 transition-colors flex items-center justify-center"
                   title={isMinimized ? "Expand" : "Minimize"}
                 >
-                  <Minus className="h-3.5 w-3.5" />
+                  {isMinimized ? (
+                    <ChevronUp className="h-3.5 w-3.5" />
+                  ) : (
+                    <Minus className="h-3.5 w-3.5" />
+                  )}
                 </button>
                 <button 
                   onClick={() => setIsOpen(false)}
