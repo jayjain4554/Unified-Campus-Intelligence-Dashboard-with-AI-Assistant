@@ -1,0 +1,37 @@
+
+> @campus-intelligence/web@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.19
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 4.4s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/11) ...
+   Generating static pages (2/11) 
+   Generating static pages (5/11) 
+   Generating static pages (8/11) 
+ ✓ Generating static pages (11/11)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    11.2 kB         114 kB
+├ ○ /_not-found                            986 B         103 kB
+├ ƒ /api/academics/gpa                     139 B         103 kB
+├ ƒ /api/academics/schedule                139 B         103 kB
+├ ƒ /api/cafeteria                         139 B         103 kB
+├ ƒ /api/chat                              139 B         103 kB
+├ ƒ /api/events                            139 B         103 kB
+├ ƒ /api/library/search                    139 B         103 kB
+└ ƒ /api/metrics                           139 B         103 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/18-a6801e2fc629b9f0.js        46.3 kB
+  ├ chunks/87c73c54-24122e7b92478d00.js  54.2 kB
+  └ other shared chunks (total)          1.97 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

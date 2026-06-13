@@ -1,0 +1,20 @@
+{
+  "name": "@campus-intelligence/ai-assistant",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@campus-intelligence/types": "*",
+    "@modelcontextprotocol/sdk": "^0.6.0"
+  },
+  "devDependencies": {
+    "@campus-intelligence/typescript-config": "*",
+    "typescript": "^5.4.5"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@campus-intelligence/mcp-events",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/server.js",
+  "types": "./dist/server.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/local.js",
+    "dev": "node dist/local.js"
+  },
+  "dependencies": {
+    "@campus-intelligence/types": "*",
+    "@modelcontextprotocol/sdk": "^0.6.0",
+    "@types/express": "^5.0.6",
+    "express": "^5.2.1",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@campus-intelligence/typescript-config": "*",
+    "typescript": "^5.4.5"
+  }
+}

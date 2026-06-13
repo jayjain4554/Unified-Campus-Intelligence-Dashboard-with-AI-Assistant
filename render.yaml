@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: mcp-gateway
+    env: node
+    buildCommand: npm install && npx turbo run build --filter=@campus-intelligence/mcp-gateway
+    startCommand: npm start --workspace=@campus-intelligence/mcp-gateway
+    envVars:
+      - key: PORT
+        value: 10000
