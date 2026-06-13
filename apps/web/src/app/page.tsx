@@ -439,7 +439,7 @@ export default function Home() {
             <User className="h-4 w-4 text-slate-300" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-slate-300">Jay Jagtap</p>
+            <p className="text-xs font-semibold text-slate-300">Student</p>
             <p className="text-[10px] text-slate-500 font-mono">ID: std-123</p>
           </div>
         </div>
