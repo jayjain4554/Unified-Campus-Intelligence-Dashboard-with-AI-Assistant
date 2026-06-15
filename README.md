@@ -1,23 +1,23 @@
-# 🎓 Unified Campus Intelligence Dashboard
+#  Unified Campus Intelligence Dashboard
 
 A full-stack, AI-powered campus information hub built with **Next.js**, **Model Context Protocol (MCP)**, and a **Turborepo** monorepo architecture. Students can ask natural-language questions and instantly get answers about their academics, cafeteria menus, library books, and upcoming campus events — all in one place.
 
 ---
 
-## ✨ Features
+##  Features
 
-- 🤖 **AI Assistant** — A rule-based agentic pipeline (Plan → Execute → Synthesize) that understands student queries
-- 📚 **Library** — Search books and check availability via MCP
-- 🍽️ **Cafeteria** — View daily menus with vegan/vegetarian filters
-- 🗓️ **Events** — Browse upcoming hackathons, concerts, and campus events
-- 🎓 **Academics** — Fetch GPA, class schedule, and handbook policies (with RAG over a PDF handbook)
-- 🔄 **Fallback Mode** — Gracefully falls back to mock data when MCP servers are offline
-- 📊 **Observability** — Built-in invocation metrics (latency, error rates) per MCP server
-- 🚀 **Deployable** — Gateway ships to [Render](https://render.com), frontend to [Vercel](https://vercel.com)
+-  **AI Assistant** — A rule-based agentic pipeline (Plan → Execute → Synthesize) that understands student queries
+-  **Library** — Search books and check availability via MCP
+-  **Cafeteria** — View daily menus with vegan/vegetarian filters
+-  **Events** — Browse upcoming hackathons, concerts, and campus events
+-  **Academics** — Fetch GPA, class schedule, and handbook policies (with RAG over a PDF handbook)
+-  **Fallback Mode** — Gracefully falls back to mock data when MCP servers are offline
+-  **Observability** — Built-in invocation metrics (latency, error rates) per MCP server
+-  **Deployable** — Gateway ships to [Render](https://render.com), frontend to [Vercel](https://vercel.com)
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -53,7 +53,7 @@ A full-stack, AI-powered campus information hub built with **Next.js**, **Model 
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 unified-campus-intelligence-dashboard/
@@ -86,7 +86,7 @@ unified-campus-intelligence-dashboard/
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -103,7 +103,7 @@ unified-campus-intelligence-dashboard/
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
@@ -156,7 +156,7 @@ http://localhost:3000
 
 ---
 
-## 🤖 AI Assistant Pipeline
+##  AI Assistant Pipeline
 
 The assistant uses a **3-phase agentic pipeline**:
 
@@ -193,7 +193,7 @@ User Query
 
 ---
 
-## 🔌 MCP Server Endpoints
+##  MCP Server Endpoints
 
 All MCP servers are exposed via the **gateway** using SSE transport:
 
@@ -211,7 +211,7 @@ GET /health
 
 ---
 
-## 🎓 RAG — Academics Handbook
+##  RAG — Academics Handbook
 
 The **Academics MCP Server** supports PDF-based Q&A using a RAG pipeline:
 
@@ -230,7 +230,7 @@ npx ts-node apps/mcp-servers/academics/src/rag/ingest.ts
 
 ---
 
-## 🌍 Deployment
+##  Deployment
 
 ### Frontend → Vercel
 
@@ -260,7 +260,7 @@ Set these environment variables on Render after deploying the MCP servers:
 
 ---
 
-## 📦 Shared Packages
+##  Shared Packages
 
 | Package | Purpose |
 |---|---|
@@ -271,7 +271,7 @@ Set these environment variables on Render after deploying the MCP servers:
 
 ---
 
-## 📊 Observability
+##  Observability
 
 The executor automatically records per-invocation metrics (accessible via `getMetrics()`):
 
@@ -284,7 +284,7 @@ const metrics = getMetrics();
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feat/your-feature`
@@ -293,6 +293,6 @@ const metrics = getMetrics();
 
 ---
 
-## 📄 License
+##  License
 
 MIT © Jay Jain
